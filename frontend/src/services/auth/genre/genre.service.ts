@@ -20,3 +20,6 @@ export const getDetailGenre = (id: string): Promise<BaseResponse<Genre>> =>
 
 export const updateGenre = (data: GenreValues, id: string) => 
     privateInstance.put(`/admin/genres/${id}`, data).then(res => res.data);
+
+export const deleteGenre = (id: string) => 
+    privateInstance.delete(`/admin/genres/${id}`).then(res => res.data);
