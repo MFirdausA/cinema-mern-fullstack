@@ -6,29 +6,31 @@ import { getSession } from "@/lib/utils";
 import AdminGenre from "@/pages/AdminGenre";
 import { getDetailGenre, getGenres } from "@/services/auth/genre/genre.service";
 import AdminGenreForm from "@/pages/AdminGenre/form";
+import AdminTheater from "@/pages/AdminTheater";
+import { getTheaters } from "@/services/auth/theater/theater.service";
 
 const adminRoutes: RouteObject[] = [
     {
         path: "/admin/login",
-        element: <AdminLoginPage/>
+        element: <AdminLoginPage />
     },
     {
         path: "/admin",
-        element: <AdminLayout/>,
+        element: <AdminLayout />,
         loader: () => {
             const user = getSession();
             console.log(user);
 
-            if(!user || user?.role !== "admin") {
+            if (!user || user?.role !== "admin") {
                 throw redirect("/admin/login")
             }
-            
+
             return user;
         },
         children: [
             {
                 index: true,
-                element: <AdminOverview/>
+                element: <AdminOverview />
             },
             {
                 path: "/admin/genres",
@@ -37,7 +39,7 @@ const adminRoutes: RouteObject[] = [
 
                     return genres.data;
                 },
-                element: <AdminGenre/>
+                element: <AdminGenre />
             },
             {
                 path: "/admin/genres/create",
@@ -45,7 +47,7 @@ const adminRoutes: RouteObject[] = [
             },
             {
                 path: "/admin/genres/edit/:id",
-                loader: async ({params}) => {
+                loader: async ({ params }) => {
                     if (!params.id) {
                         throw redirect("/admin/genres");
                     }
@@ -55,6 +57,15 @@ const adminRoutes: RouteObject[] = [
                     return detail.data
                 },
                 element: <AdminGenreForm />
+            },
+            {
+                path: "/admin/theaters",
+                loader: async () => {
+                    const theaters = await getTheaters();
+
+                    return theaters.data;
+                },
+                element: <AdminTheater />,
             },
         ]
     }
