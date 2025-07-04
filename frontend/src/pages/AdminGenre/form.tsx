@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-export default function form() {
+export default function AdminGenreForm() {
     const detail = useLoaderData() as Genre | undefined
 
     const form = useForm<GenreValues>({

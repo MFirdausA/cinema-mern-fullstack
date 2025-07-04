@@ -18,7 +18,7 @@ export default function AdminTheater() {
         </div>
             <div>
                 <Button asChild className="mb-3">
-                    <Link to="/admin/theater/create">
+                    <Link to="/admin/theaters/create">
                         <Plus className="w-4 h-4" />
                         Add New Theater
                     </Link>

@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge"
 import type { Theater } from "@/services/auth/theater/theater.types";
 import type { ColumnDef } from "@tanstack/react-table"
-// import Actioncolumn from "./actionColumns";
+import Actioncolumn from "./actionColumns";
 
 export const columns: ColumnDef<Theater>[] = [
     {
@@ -10,7 +10,7 @@ export const columns: ColumnDef<Theater>[] = [
     },
     {
         accessorKey: "city",
-        header: "city",
+        header: "City",
         cell: ({ row }) => <Badge>{row.original.city}</Badge>
     },
     {
@@ -18,7 +18,7 @@ export const columns: ColumnDef<Theater>[] = [
         cell: ({ row }) => {
             const theater = row.original;
 
-            return <div>action column</div>;
+            return <Actioncolumn id={theater._id} />
         },
     },
 ]

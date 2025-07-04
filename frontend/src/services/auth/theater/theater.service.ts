@@ -4,7 +4,7 @@ import { z } from "zod";
 import type { Theater } from "./theater.types";
 
 export const theaterSchema = z.object({
-    name: z.string().min(5),
+    name: z.string().min(3),
     city: z.string({ required_error: "Please select a theater city location" }),
 })
 
