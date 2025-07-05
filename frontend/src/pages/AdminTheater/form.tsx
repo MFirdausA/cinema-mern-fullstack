@@ -37,7 +37,7 @@ export default function AdminTheaterForm() {
 
             navigate("/admin/theaters")
 
-            toast.success(`Theater created successfully ${detail === undefined ? "created" : "updated"}`)
+            toast.success(`Theater successfully ${detail === undefined ? "created" : "updated"}`)
         } catch (error) {
             console.log(error)
             toast.error("Failed to create theater")

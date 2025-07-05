@@ -34,7 +34,7 @@ export default function AdminGenreForm() {
 
             navigate("/admin/genres")
 
-            toast.success(`Genre created successfully ${detail === undefined ? "created" : "updated"}`)
+            toast.success(`Genre successfully ${detail === undefined ? "created" : "updated"}`)
         } catch (error) {
             console.log(error)
             toast.error("Failed to create genre")
