@@ -4,8 +4,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { LOCATION_OPTIONS } from "@/lib/utils";
-import { createTheater, theaterSchema, updateTheater, type TheaterValues } from "@/services/auth/theater/theater.service";
-import type { Theater } from "@/services/auth/theater/theater.types";
+import { createTheater, theaterSchema, updateTheater, type TheaterValues } from "@/services/theater/theater.service";
+import type { Theater } from "@/services/theater/theater.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Save } from "lucide-react";

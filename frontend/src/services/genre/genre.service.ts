@@ -1,5 +1,5 @@
 import type { BaseResponse } from "@/types/response";
-import type { Genre } from "./genre.types";
+import type { Genre } from "./genre.type";
 import { privateInstance } from "@/lib/axios";
 import { z } from "zod";
 

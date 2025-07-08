@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link, useLoaderData } from "react-router-dom";
 import { Plus } from "lucide-react";
 import TitleHeading from "@/components/titleHeading";
-import type { Genre } from "@/services/auth/genre/genre.types";
+import type { Genre } from "@/services/genre/genre.type";
 
 export default function AdminGenre() {
     const genres = useLoaderData() as Genre[]

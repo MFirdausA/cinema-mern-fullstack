@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { deleteGenre } from "@/services/auth/genre/genre.service";
+import { deleteGenre } from "@/services/genre/genre.service";
 import { useMutation } from "@tanstack/react-query";
 import { Edit, Trash } from "lucide-react";
 import React from "react";

@@ -5,7 +5,7 @@ import { Plus } from 'lucide-react'
 import React from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
 import { columns } from './columns'
-import type { Theater } from '@/services/auth/theater/theater.types'
+import type { Theater } from '@/services/theater/theater.type'
 
 export default function AdminTheater() {
     const theaters = useLoaderData() as Theater[]

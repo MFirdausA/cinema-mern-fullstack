@@ -1,7 +1,7 @@
 import type { BaseResponse } from "@/types/response";
 import { privateInstance } from "@/lib/axios";
 import { z } from "zod";
-import type { Theater } from "./theater.types";
+import type { Theater } from "./theater.type";
 
 export const theaterSchema = z.object({
     name: z.string().min(3),

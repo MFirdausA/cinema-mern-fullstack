@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge"
-import type { Genre } from "@/services/auth/genre/genre.types"
+import type { Genre } from "@/services/genre/genre.type"
 import type { ColumnDef } from "@tanstack/react-table"
 import Actioncolumn from "./actionColumns";
 
