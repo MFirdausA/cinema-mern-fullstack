@@ -1,10 +1,13 @@
 import {
     Bell,
     Clapperboard,
+    DollarSign,
     Home,
     Package,
     Package2,
     Theater,
+    User,
+    Wallet,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -57,6 +60,27 @@ export default function Sidebar() {
                             >
                                 <Clapperboard className="h-4 w-4" />
                                 Movies{" "}
+                            </Link>
+                            <Link
+                                to="/admin/customers"
+                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                            >
+                                <User className="h-4 w-4" />
+                                Customer List{" "}
+                            </Link>
+                            <Link
+                                to="/admin/transactions"
+                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                            >
+                                <DollarSign className="h-4 w-4" />
+                                Transaction List{" "}
+                            </Link>
+                            <Link
+                                to="/admin/wallet-transactions"
+                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                            >
+                                <Wallet className="h-4 w-4" />
+                                Wallet Transaction {" "}
                             </Link>
                         </nav>
                     </div>

@@ -12,6 +12,10 @@ import AdminTheaterForm from "@/pages/AdminTheater/form";
 import { getDetailMovie, getMovies } from "@/services/movie/movie.service";
 import AdminMovie from "@/pages/AdminMovie";
 import AdminMovieForm from "@/pages/AdminMovie/form";
+import { getCustomers, getTransactions, getWalletTransactions } from "@/services/customers/customer.service";
+import AdminCustomer from "@/pages/AdminCustomer";
+import AdminTransaction from "@/pages/AdminTransaction";
+import AdminWalletTransaction from "@/pages/AdminWalletTransaction";
 
 const adminRoutes: RouteObject[] = [
     {
@@ -128,6 +132,33 @@ const adminRoutes: RouteObject[] = [
                     }
                 },
                 element: <AdminMovieForm />
+            },
+            {
+                path: "/admin/customers",
+                loader: async () => {
+                    const customers = await getCustomers();
+
+                    return customers.data;
+                },
+                element: <AdminCustomer />
+            },
+            {
+                path: "/admin/transactions",
+                loader: async () => {
+                    const transactions = await getTransactions();
+
+                    return transactions.data;
+                },
+                element: <AdminTransaction />
+            },
+            {
+                path: "/admin/wallet-transactions",
+                loader: async () => {
+                    const transactions = await getWalletTransactions();
+
+                    return transactions.data;
+                },
+                element: <AdminWalletTransaction />
             },
         ]
     }

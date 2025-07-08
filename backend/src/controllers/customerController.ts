@@ -23,30 +23,30 @@ export const getCustomers = async (req: Request, res: Response) => {
 }
 
 export const getWalletTransactions = async (req: Request, res: Response) => {
-    try {
-        const transactions = await WalletTransaction.find().populate({
-            path: "user",
-            select: "user -_id",
-            populate: {
-                path: "user",
-                select: "name"
-            }
-        });
+	try {
+		const transactions = await WalletTransaction.find().populate({
+			path: "wallet",
+			select: "user -_id",
+			populate: {
+				path: "user",
+				select: "name",
+			},
+		});
 
-        return res.json({
-            data: transactions,
-            message: "Success get data",
-            status: "Success",
-        });
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({
-            message: "Failed get data",
-            data: null,
-            status: "Failed",
-        });
-    }
-}
+		return res.json({
+			data: transactions,
+			message: "Success get data",
+			status: "Success",
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({
+			message: "Failed to get data",
+			data: null,
+			status: "failed",
+		});
+	}
+};
 
 export const getTransactions = async (req: Request, res: Response) => {
     try {
