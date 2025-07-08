@@ -14,6 +14,7 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.static('public'));
 
 connectDB();
 

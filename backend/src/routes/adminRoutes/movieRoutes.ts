@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import { createMovie, deleteMovie, getMovieDetail, getMovies, getMoviesDetail, updateMovie } from "../../controllers/movieController";
+import { createMovie, deleteMovie, getMovieDetail, getMovies, updateMovie } from "../../controllers/movieController";
 import { imageFilter, thumbnailStorage } from "../../utils/multer";
 import { get } from "node:http";
 
