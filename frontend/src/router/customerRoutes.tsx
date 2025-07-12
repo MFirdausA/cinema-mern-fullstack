@@ -2,6 +2,7 @@ import { getSession } from "@/lib/utils";
 import CustomerHome from "@/pages/CustomerHome";
 import CustomerSignIn from "@/pages/CustomerSignIn";
 import CustomerSignUp from "@/pages/CustomerSignUp";
+import { getGenres, getMovies } from "@/services/global/global.service";
 import { redirect, type RouteObject } from "react-router-dom";
 
 const customerRoutes: RouteObject[] = [
@@ -22,7 +23,12 @@ const customerRoutes: RouteObject[] = [
                 return redirect("/sign-in");
             }
 
-            return true;
+            const genres = await getGenres()
+            const movies = await getMovies()
+            return {
+                movies: movies.data,
+                genres: genres.data,
+            };
         },
         element: <CustomerHome />
     },

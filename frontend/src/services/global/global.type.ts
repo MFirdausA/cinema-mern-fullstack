@@ -1,0 +1,13 @@
+import type { Genre } from "../genre/genre.type"
+import type { Theater } from "../theater/theater.type"
+
+
+export interface Movie {
+    _id: string
+    title: string
+    genre: Pick<Genre, "name">
+    theaters: Pick<Theater, "city">
+    thumbnail: string
+    thumbnailUrl: string
+    id: string
+}
