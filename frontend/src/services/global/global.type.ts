@@ -11,3 +11,12 @@ export interface Movie {
     thumbnailUrl: string
     id: string
 }
+
+type MovieTheater = Movie & {
+    theaters: Pick<Theater, "_id" | "city">[]
+}
+
+export interface MovieExplore {
+    filteredMovies: Movie[];
+    allMovies: MovieTheater[];
+}

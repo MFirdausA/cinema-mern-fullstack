@@ -1,4 +1,5 @@
 import { getSession } from "@/lib/utils";
+import CustomerBrowseGenre from "@/pages/CustomerBrowseGenre";
 import CustomerHome from "@/pages/CustomerHome";
 import CustomerSignIn from "@/pages/CustomerSignIn";
 import CustomerSignUp from "@/pages/CustomerSignUp";
@@ -32,6 +33,10 @@ const customerRoutes: RouteObject[] = [
         },
         element: <CustomerHome />
     },
+    {
+        path: "/browse/:genreId",
+        element: <CustomerBrowseGenre />,
+    }
 
 ]
 
