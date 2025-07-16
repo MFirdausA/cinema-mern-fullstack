@@ -96,7 +96,7 @@ export default function CustomerBrowseGenre() {
 						className="swiper-wrapper">
 						{data?.data.filteredMovies.map((item) => (
 							<SwiperSlide className="swiper-slide !w-fit">
-								<Link to="details.html" className="card">
+								<Link to={`/movies/${item._id}`} className="card">
 									<div className="relative flex w-[240px] h-[300px] shrink-0 rounded-3xl bg-[#D9D9D9] overflow-hidden">
 										<img src={item.thumbnailUrl} className="w-full h-full object-cover" alt="thumbnail" />
 										<div className="absolute w-full bottom-0 p-[14px] z-10">

@@ -1,6 +1,7 @@
 import { getSession } from "@/lib/utils";
 import CustomerBrowseGenre from "@/pages/CustomerBrowseGenre";
 import CustomerHome from "@/pages/CustomerHome";
+import CustomerMovieDetail from "@/pages/CustomerMovieDetail";
 import CustomerSignIn from "@/pages/CustomerSignIn";
 import CustomerSignUp from "@/pages/CustomerSignUp";
 import { getGenres, getMovies } from "@/services/global/global.service";
@@ -60,6 +61,23 @@ const customerRoutes: RouteObject[] = [
             }
         },
         element: <CustomerBrowseGenre />,
+    },
+    {
+        path: "/movie/:movieId",
+        loader: async ({ params }) => {
+            const user = getSession();
+
+            if (!user || user.role !== "customer") {
+                return redirect("/sign-in");
+            }
+
+            if (!params.movieId) {
+                throw redirect("/")
+            }
+
+            return true
+        },
+        element: <CustomerMovieDetail />,
     }
 
 ]
