@@ -1,23 +1,45 @@
 import React, { useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLoaderData, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SheetFilter from "./sheetFilter";
 import { useQuery } from "@tanstack/react-query";
 import { getMoviesByGenre } from "@/services/global/global.service";
+import type { Genre } from "@/services/genre/genre.type";
+import type { Theater } from "@/services/theater/theater.type";
+import { useAppSelector } from "@/redux/hooks";
 import { Item } from "@radix-ui/react-dropdown-menu";
+
+export type LoaderData = {
+	genres: Pick<Genre, "_id" | "name">[]
+	theaters: Theater[]
+}
 
 export default function CustomerBrowseGenre() {
 	const [show, setShowFilter] = useState<boolean>(false);
 
+	const { genres, theaters } = useLoaderData() as LoaderData;
 	const { genreId } = useParams();
+	const filter = useAppSelector((state) => state.filter.data);
 
-	const { data, isLoading } = useQuery({
-		queryKey: ["browse-movies", genreId],
-		queryFn: () => getMoviesByGenre(genreId ?? "")
+	console.log({
+		filter
 	})
 
+	const { data, isLoading } = useQuery({
+		queryKey: ["browse-movies", genreId, filter],
+		queryFn: () => getMoviesByGenre(genreId ?? "", filter),
+	})
+
+	const selectedGenre = useMemo(() => {
+		if (!genreId) {
+			return null
+		}
+
+		return genres.find((va) => va._id === genreId)
+	}, [genres, genreId])
+
 	if (isLoading) {
-		<div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+		return <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
 			Loading...
 		</div>
 	}
@@ -28,20 +50,26 @@ export default function CustomerBrowseGenre() {
 				<Link to="/" className="w-12 h-12 flex shrink-0 items-center justify-center bg-[#FFFFFF1A] backdrop-blur-md rounded-full">
 					<img src="/images/icons/arrow-left.svg" className="w-[22px] h-[22px] flex shrink-0" alt="" />
 				</Link>
-				<p className="text-center mx-auto font-semibold text-sm">Asian Genre</p>
+				<p className="text-center mx-auto font-semibold text-sm">{selectedGenre ? selectedGenre.name : ""}</p>
 				<div className="dummy-button w-12"></div>
 			</div>
 			<section className="flex items-center gap-3 flex-wrap px-5 mt-5">
 				<p className="font-semibold">Filters</p>
-				<Link to="browse-genre.html" className="card">
-					<div className="flex rounded-full p-[12px_14px] bg-[#FFFFFF1A] font-semibold text-sm hover:ring-1 hover:ring-white transition-all duration-300">Asian</div>
-				</Link>
-				<Link to="browse-genre.html" className="card">
-					<div className="flex rounded-full p-[12px_14px] bg-[#FFFFFF1A] font-semibold text-sm hover:ring-1 hover:ring-white transition-all duration-300">Jakarta</div>
-				</Link>
-				<Link to="browse-genre.html" className="card">
-					<div className="flex rounded-full p-[12px_14px] bg-[#FFFFFF1A] font-semibold text-sm hover:ring-1 hover:ring-white transition-all duration-300">XXI Premiere</div>
-				</Link>
+				<div className="flex rounded-full p-[12px_14px] bg-[#FFFFFF1A] font-semibold text-sm hover:ring-1 hover:ring-white transition-all duration-300">
+					{selectedGenre?.name}
+				</div>
+				{filter.city && (
+					<div className="flex rounded-full p-[12px_14px] bg-[#FFFFFF1A] font-semibold text-sm hover:ring-1 hover:ring-white transition-all duration-300">
+					{filter.city}</div>
+				)}
+				{filter.theaters && (
+					<>
+					{filter.theaters?.map((item) => (
+						<div key={item} className="flex rounded-full p-[12px_14px] bg-[#FFFFFF1A] font-semibold text-sm hover:ring-1 hover:ring-white transition-all duration-300">
+						{theaters.find((va) => va._id === item)?.name}</div>
+					))}
+					</>
+				)}
 			</section>
 			<section id="Popular" className="flex flex-col gap-4 mt-5">
 				<h2 className="font-semibold px-5">Popular Movies in Asian</h2>

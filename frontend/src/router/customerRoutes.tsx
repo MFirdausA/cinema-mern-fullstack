@@ -4,6 +4,7 @@ import CustomerHome from "@/pages/CustomerHome";
 import CustomerSignIn from "@/pages/CustomerSignIn";
 import CustomerSignUp from "@/pages/CustomerSignUp";
 import { getGenres, getMovies } from "@/services/global/global.service";
+import { getTheaters } from "@/services/theater/theater.service";
 import { redirect, type RouteObject } from "react-router-dom";
 
 const customerRoutes: RouteObject[] = [
@@ -35,6 +36,29 @@ const customerRoutes: RouteObject[] = [
     },
     {
         path: "/browse/:genreId",
+        loader: async ({ params }) => {
+            const user = getSession();
+
+            if (!user || user.role !== "customer") {
+                return redirect("/sign-in");
+            }
+
+            if (!params.genreId) {
+                throw redirect("/")
+            }
+
+            const genres = await getGenres();
+            const theaters = await getTheaters("customer");
+
+            console.log({
+                genres,
+                theaters
+            })
+            return {
+                genres: genres.data,
+                theaters: theaters.data
+            }
+        },
         element: <CustomerBrowseGenre />,
     }
 

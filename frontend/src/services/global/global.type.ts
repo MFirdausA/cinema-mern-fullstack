@@ -18,5 +18,5 @@ type MovieTheater = Movie & {
 
 export interface MovieExplore {
     filteredMovies: Movie[];
-    allMovies: MovieTheater[];
+    allMovies: MovieTheater[]
 }
