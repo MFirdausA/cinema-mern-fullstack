@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Swiper, SwiperSlide } from "swiper/react";
 
 
 export default function CustomerMovieDetail() {
+    const [tab, setTab] = useState<"about" | "reviews" | "theaters" | "cast">("about",);
+
     return (
         <div id="Content-Container" className="relative flex flex-col w-full max-w-[640px] min-h-screen mx-auto text-white bg-[linear-gradient(179.86deg,_#000000_40.82%,_#0E0E24_99.88%)] overflow-x-hidden">
             <div id="Background" className="absolute top-0 w-full h-[480px] overflow-hidden">
@@ -48,131 +50,200 @@ export default function CustomerMovieDetail() {
                         initialSlide={1}
                         className="swiper-wrapper">
                         <SwiperSlide className="swiper-slide !w-fit py-[1px]">
-                            <button className="tab-link" data-target-tab="#About-Tab">
-                                <div className="flex rounded-full p-[12px_14px] text-black bg-[#FFFFFF1A] font-semibold text-sm hover:ring-1 hover:ring-white transition-all duration-300 !bg-white !text-premiere-black">About</div>
+                            <button className="tab-link" onClick={() => setTab("about")}>
+                                <div className="flex rounded-full p-[12px_14px] text-black bg-[#FFFFFF1A] font-semibold text-sm hover:ring-1 hover:ring-white transition-all duration-300 !bg-white !text-premiere-black">about</div>
                             </button>
                         </SwiperSlide>
                         <SwiperSlide className="swiper-slide !w-fit py-[1px]">
-                            <button className="tab-link" data-target-tab="#Reviews-Tab">
-                                <div className="flex rounded-full p-[12px_14px] bg-[#FFFFFF1A] font-semibold text-sm hover:ring-1 hover:ring-white transition-all duration-300">Reviews</div>
+                            <button className="tab-link" onClick={() => setTab("reviews")}>
+                                <div className="flex rounded-full p-[12px_14px] bg-[#FFFFFF1A] font-semibold text-sm hover:ring-1 hover:ring-white transition-all duration-300">reviews</div>
                             </button>
                         </SwiperSlide>
                         <SwiperSlide className="swiper-slide !w-fit py-[1px]">
-                            <button className="tab-link" data-target-tab="#Theaters-Tab">
-                                <div className="flex rounded-full p-[12px_14px] bg-[#FFFFFF1A] font-semibold text-sm hover:ring-1 hover:ring-white transition-all duration-300">Theaters</div>
+                            <button className="tab-link" onClick={() => setTab("theaters")}>
+                                <div className="flex rounded-full p-[12px_14px] bg-[#FFFFFF1A] font-semibold text-sm hover:ring-1 hover:ring-white transition-all duration-300">theaters</div>
                             </button>
                         </SwiperSlide>
                         <SwiperSlide className="swiper-slide !w-fit py-[1px]">
-                            <button className="tab-link">
-                                <div className="flex rounded-full p-[12px_14px] bg-[#FFFFFF1A] font-semibold text-sm hover:ring-1 hover:ring-white transition-all duration-300">Casts</div>
+                            <button className="tab-link" onClick={() => setTab("cast")}>
+                                <div className="flex rounded-full p-[12px_14px] bg-[#FFFFFF1A] font-semibold text-sm hover:ring-1 hover:ring-white transition-all duration-300">cast</div>
                             </button>
                         </SwiperSlide>
                     </Swiper>
                 </div>
                 <div className="px-5">
-                    <div id="About-Tab" className="tab-content flex flex-col gap-5">
-                        <div className="flex flex-col gap-3">
-                            <h2 className="font-semibold">About</h2>
-                            <p className="leading-[28px]">Legendary sci-fi film series set in a galaxy far, far away, blending epic space battles, mystical powers, and iconic characters the original film, released in 1977 and later on.</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className="flex items-center rounded-full p-[8px_14px] gap-1 bg-[#FFFFFF1A] backdrop-blur-md">
-                                <img src="/images/icons/video-vertical-white.svg" className="w-[18px] h-[18px] flex shrink-0" alt="icon" />
-                                <p className="text-sm">Kids</p>
+                    {tab === "about" && (
+                        <div id="about-Tab" className="tab-content flex flex-col gap-5">
+                            <div className="flex flex-col gap-3">
+                                <h2 className="font-semibold">about</h2>
+                                <p className="leading-[28px]">Legendary sci-fi film series set in a galaxy far, far away, blending epic space battles, mystical powers, and iconic characters the original film, released in 1977 and later on.</p>
                             </div>
-                            <div className="flex items-center rounded-full p-[8px_14px] gap-1 bg-[#FFFFFF1A] backdrop-blur-md">
-                                <img src="/images/icons/location.svg" className="w-[18px] h-[18px] flex shrink-0" alt="icon" />
-                                <p className="text-sm">Jakarta</p>
-                            </div>
-                            <div className="flex items-center rounded-full p-[8px_14px] gap-1 bg-[#FFFFFF1A] backdrop-blur-md">
-                                <p className="text-sm">4/5</p>
-                                <img src="/images/icons/Star 1.svg" className="w-[18px] h-[18px] flex shrink-0" alt="icon" />
-                            </div>
-                        </div>
-                    </div>
-                    <div id="Reviews-Tab" className="tab-content flex flex-col gap-4 hidden">
-                        <h2 className="font-semibold">Customer Reviews</h2>
-                        <div className="review-card flex flex-col rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
-                            <div className="flex items-center gap-1">
-                                <img src="/images/icons/Star 1.svg" className="w-5 h-5 flex shrink-0" alt="star" />
-                                <img src="/images/icons/Star 1.svg" className="w-5 h-5 flex shrink-0" alt="star" />
-                                <img src="/images/icons/Star 1.svg" className="w-5 h-5 flex shrink-0" alt="star" />
-                                <img src="/images/icons/Star 1.svg" className="w-5 h-5 flex shrink-0" alt="star" />
-                            </div>
-                            <p className="leading-[28px]">It was okay for me, just so so...</p>
-                            <p className="font-semibold">Abbe Parnaman</p>
-                        </div>
-                        <div className="review-card flex flex-col rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
-                            <div className="flex items-center gap-1">
-                                <img src="/images/icons/Star 1.svg" className="w-5 h-5 flex shrink-0" alt="star" />
-                                <img src="/images/icons/Star 1.svg" className="w-5 h-5 flex shrink-0" alt="star" />
-                                <img src="/images/icons/Star 1.svg" className="w-5 h-5 flex shrink-0" alt="star" />
-                                <img src="/images/icons/Star 1.svg" className="w-5 h-5 flex shrink-0" alt="star" />
-                                <img src="/images/icons/Star 1.svg" className="w-5 h-5 flex shrink-0" alt="star" />
-                            </div>
-                            <p className="leading-[28px]">Movie was good, we were happy couple watching this every time again again.</p>
-                            <p className="font-semibold">Sarina Putri</p>
-                        </div>
-                        <div className="review-card flex flex-col rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
-                            <div className="flex items-center gap-1">
-                                <img src="/images/icons/Star 1.svg" className="w-5 h-5 flex shrink-0" alt="star" />
-                                <img src="/images/icons/Star 1.svg" className="w-5 h-5 flex shrink-0" alt="star" />
-                                <img src="/images/icons/Star 1.svg" className="w-5 h-5 flex shrink-0" alt="star" />
-                                <img src="/images/icons/Star 1.svg" className="w-5 h-5 flex shrink-0" alt="star" />
-                                <img src="/images/icons/Star 1.svg" className="w-5 h-5 flex shrink-0" alt="star" />
-                            </div>
-                            <p className="leading-[28px]">It was okay for me, just so so...</p>
-                            <p className="font-semibold">Abbe Parnaman</p>
-                        </div>
-                    </div>
-                    <div id="Theaters-Tab" className="tab-content flex flex-col gap-4 hidden">
-                        <h2 className="font-semibold">Available in Theaters</h2>
-                        <div className="theather-card flex items-center rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
-                            <div className="w-[100px] h-[110px] flex shrink-0 rounded-2xl overflow-hidden bg-[#D9D9D9]">
-                                <img src="/images/thumbnails/theater1.png" className="w-full h-full object-cover" alt="theater" />
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <h3 className="font-semibold">Tenda Bersama</h3>
-                                <p className="text-sm text-premiere-grey">Jalan menuju kebahagiaan bersama no 193, Jakarta</p>
+                            <div className="flex items-center gap-2">
+                                <div className="flex items-center rounded-full p-[8px_14px] gap-1 bg-[#FFFFFF1A] backdrop-blur-md">
+                                    <img src="/images/icons/video-vertical-white.svg" className="w-[18px] h-[18px] flex shrink-0" alt="icon" />
+                                    <p className="text-sm">Kids</p>
+                                </div>
+                                <div className="flex items-center rounded-full p-[8px_14px] gap-1 bg-[#FFFFFF1A] backdrop-blur-md">
+                                    <img src="/images/icons/location.svg" className="w-[18px] h-[18px] flex shrink-0" alt="icon" />
+                                    <p className="text-sm">Jakarta</p>
+                                </div>
+                                <div className="flex items-center rounded-full p-[8px_14px] gap-1 bg-[#FFFFFF1A] backdrop-blur-md">
+                                    <p className="text-sm">4/5</p>
+                                    <img src="/images/icons/Star 1.svg" className="w-[18px] h-[18px] flex shrink-0" alt="icon" />
+                                </div>
                             </div>
                         </div>
-                        <div className="theather-card flex items-center rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
-                            <div className="w-[100px] h-[110px] flex shrink-0 rounded-2xl overflow-hidden bg-[#D9D9D9]">
-                                <img src="/images/thumbnails/theater2.png" className="w-full h-full object-cover" alt="theater" />
+                    )}
+                    {tab === "reviews" && (
+						<div id="Reviews-Tab" className="tab-content flex flex-col gap-4">
+							<h2 className="font-semibold">Customer Reviews</h2>
+							<div className="review-card flex flex-col rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
+								<div className="flex items-center gap-1">
+									<img
+										src="/images/icons/Star 1.svg"
+										className="w-5 h-5 flex shrink-0"
+										alt="star"
+									/>
+									<img
+										src="/images/icons/Star 1.svg"
+										className="w-5 h-5 flex shrink-0"
+										alt="star"
+									/>
+									<img
+										src="/images/icons/Star 1.svg"
+										className="w-5 h-5 flex shrink-0"
+										alt="star"
+									/>
+									<img
+										src="/images/icons/Star 1.svg"
+										className="w-5 h-5 flex shrink-0"
+										alt="star"
+									/>
+								</div>
+								<p className="leading-[28px]">
+									It was okay for me, just so so...
+								</p>
+								<p className="font-semibold">Abbe Parnaman</p>
+							</div>
+							<div className="review-card flex flex-col rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
+								<div className="flex items-center gap-1">
+									<img
+										src="/images/icons/Star 1.svg"
+										className="w-5 h-5 flex shrink-0"
+										alt="star"
+									/>
+									<img
+										src="/images/icons/Star 1.svg"
+										className="w-5 h-5 flex shrink-0"
+										alt="star"
+									/>
+									<img
+										src="/images/icons/Star 1.svg"
+										className="w-5 h-5 flex shrink-0"
+										alt="star"
+									/>
+									<img
+										src="/images/icons/Star 1.svg"
+										className="w-5 h-5 flex shrink-0"
+										alt="star"
+									/>
+									<img
+										src="/images/icons/Star 1.svg"
+										className="w-5 h-5 flex shrink-0"
+										alt="star"
+									/>
+								</div>
+								<p className="leading-[28px]">
+									Movie was good, we were happy couple watching this every time
+									again again.
+								</p>
+								<p className="font-semibold">Sarina Putri</p>
+							</div>
+							<div className="review-card flex flex-col rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
+								<div className="flex items-center gap-1">
+									<img
+										src="/images/icons/Star 1.svg"
+										className="w-5 h-5 flex shrink-0"
+										alt="star"
+									/>
+									<img
+										src="/images/icons/Star 1.svg"
+										className="w-5 h-5 flex shrink-0"
+										alt="star"
+									/>
+									<img
+										src="/images/icons/Star 1.svg"
+										className="w-5 h-5 flex shrink-0"
+										alt="star"
+									/>
+									<img
+										src="/images/icons/Star 1.svg"
+										className="w-5 h-5 flex shrink-0"
+										alt="star"
+									/>
+									<img
+										src="/images/icons/Star 1.svg"
+										className="w-5 h-5 flex shrink-0"
+										alt="star"
+									/>
+								</div>
+								<p className="leading-[28px]">
+									It was okay for me, just so so...
+								</p>
+								<p className="font-semibold">Abbe Parnaman</p>
+							</div>
+						</div>
+					)}
+                    {tab === "theaters" && (
+						<div id="theaters-Tab" className="tab-content flex flex-col gap-4">
+                            <h2 className="font-semibold">Available in theaters</h2>
+                            <div className="theather-card flex items-center rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
+                                <div className="w-[100px] h-[110px] flex shrink-0 rounded-2xl overflow-hidden bg-[#D9D9D9]">
+                                    <img src="/images/thumbnails/theater1.png" className="w-full h-full object-cover" alt="theater" />
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <h3 className="font-semibold">Tenda Bersama</h3>
+                                    <p className="text-sm text-premiere-grey">Jalan menuju kebahagiaan bersama no 193, Jakarta</p>
+                                </div>
                             </div>
-                            <div className="flex flex-col gap-2">
-                                <h3 className="font-semibold">Tenda Bersama</h3>
-                                <p className="text-sm text-premiere-grey">Jalan menuju kebahagiaan bersama no 193, Jakarta</p>
+                            <div className="theather-card flex items-center rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
+                                <div className="w-[100px] h-[110px] flex shrink-0 rounded-2xl overflow-hidden bg-[#D9D9D9]">
+                                    <img src="/images/thumbnails/theater2.png" className="w-full h-full object-cover" alt="theater" />
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <h3 className="font-semibold">Tenda Bersama</h3>
+                                    <p className="text-sm text-premiere-grey">Jalan menuju kebahagiaan bersama no 193, Jakarta</p>
+                                </div>
+                            </div>
+                            <div className="theather-card flex items-center rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
+                                <div className="w-[100px] h-[110px] flex shrink-0 rounded-2xl overflow-hidden bg-[#D9D9D9]">
+                                    <img src="/images/thumbnails/theater3.png" className="w-full h-full object-cover" alt="theater" />
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <h3 className="font-semibold">Tenda Bersama</h3>
+                                    <p className="text-sm text-premiere-grey">Jalan menuju kebahagiaan bersama no 193, Jakarta</p>
+                                </div>
+                            </div>
+                            <div className="theather-card flex items-center rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
+                                <div className="w-[100px] h-[110px] flex shrink-0 rounded-2xl overflow-hidden bg-[#D9D9D9]">
+                                    <img src="/images/thumbnails/theater1.png" className="w-full h-full object-cover" alt="theater" />
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <h3 className="font-semibold">Tenda Bersama</h3>
+                                    <p className="text-sm text-premiere-grey">Jalan menuju kebahagiaan bersama no 193, Jakarta</p>
+                                </div>
+                            </div>
+                            <div className="theather-card flex items-center rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
+                                <div className="w-[100px] h-[110px] flex shrink-0 rounded-2xl overflow-hidden bg-[#D9D9D9]">
+                                    <img src="/images/thumbnails/theater3.png" className="w-full h-full object-cover" alt="theater" />
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <h3 className="font-semibold">Tenda Bersama</h3>
+                                    <p className="text-sm text-premiere-grey">Jalan menuju kebahagiaan bersama no 193, Jakarta</p>
+                                </div>
                             </div>
                         </div>
-                        <div className="theather-card flex items-center rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
-                            <div className="w-[100px] h-[110px] flex shrink-0 rounded-2xl overflow-hidden bg-[#D9D9D9]">
-                                <img src="/images/thumbnails/theater3.png" className="w-full h-full object-cover" alt="theater" />
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <h3 className="font-semibold">Tenda Bersama</h3>
-                                <p className="text-sm text-premiere-grey">Jalan menuju kebahagiaan bersama no 193, Jakarta</p>
-                            </div>
-                        </div>
-                        <div className="theather-card flex items-center rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
-                            <div className="w-[100px] h-[110px] flex shrink-0 rounded-2xl overflow-hidden bg-[#D9D9D9]">
-                                <img src="/images/thumbnails/theater1.png" className="w-full h-full object-cover" alt="theater" />
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <h3 className="font-semibold">Tenda Bersama</h3>
-                                <p className="text-sm text-premiere-grey">Jalan menuju kebahagiaan bersama no 193, Jakarta</p>
-                            </div>
-                        </div>
-                        <div className="theather-card flex items-center rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
-                            <div className="w-[100px] h-[110px] flex shrink-0 rounded-2xl overflow-hidden bg-[#D9D9D9]">
-                                <img src="/images/thumbnails/theater3.png" className="w-full h-full object-cover" alt="theater" />
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <h3 className="font-semibold">Tenda Bersama</h3>
-                                <p className="text-sm text-premiere-grey">Jalan menuju kebahagiaan bersama no 193, Jakarta</p>
-                            </div>
-                        </div>
-                    </div>
+					)}
                 </div>
             </section>
             <section id="bonus" className="flex flex-col gap-4 mt-5">
