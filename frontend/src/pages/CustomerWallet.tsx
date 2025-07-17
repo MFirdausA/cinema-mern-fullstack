@@ -1,22 +1,41 @@
 import BottomBar from '@/components/bottomBar'
-import React from 'react'
+import { cn, getSession, rupiahFormat } from '@/lib/utils';
+import { getBalance } from '@/services/global/global.service';
+import { getWalletTransactions } from '@/services/wallet/wallet.service';
+import { Item } from '@radix-ui/react-dropdown-menu';
+import { useQuery } from '@tanstack/react-query';
+import React, { use } from 'react'
+import { Link } from 'react-router-dom';
 
 export default function CustomerWallet() {
+
+    const { data, isLoading } = useQuery({
+        queryKey: ["get-balance"],
+        queryFn: () => getBalance(),
+    });
+
+    const transactions = useQuery({
+        queryKey: ["get-history-topups"],
+        queryFn: () => getWalletTransactions(),
+    })
+
     return (
         <div id="Content-Container" className="relative text-white flex flex-col w-full max-w-[640px] min-h-screen mx-auto bg-[linear-gradient(90deg,_#000000_40.82%,_#0E0E24_99.88%)] overflow-x-hidden">
             <div className="flex items-center justify-between px-5 mt-[60px]">
                 <h1 className="font-bold text-[26px] leading-[39px]">My Wallet</h1>
-                <a href="top-up.html" className="rounded-full p-[12px_18px] bg-white font-bold text-premiere-black">Top Up</a>
+                <Link to="/wallet/topup" className="rounded-full text-black p-[12px_18px] bg-white font-bold text-premiere-black">Top Up</Link>
             </div>
             <section id="Wallet" className="flex flex-col items-center gap-3 px-5 mt-5">
                 <div className="relative flex flex-col w-full max-w-[353px] rounded-[30px] bg-white/10 overflow-hidden">
                     <img src="/images/backgrounds/wallet-lines.svg" className="absolute w-full h-full object-cover" alt="" />
                     <img src="/images/logos/wallet.svg" className=" relativeflex shrink-0 w-[51px] mt-6 mx-6" alt="" />
-                    <p className="relative font-bold text-4xl leading-[54px] mt-[18px] mx-6">Rp 19.458.333</p>
+                    {!isLoading && (
+                        <p className="relative font-bold text-4xl leading-[54px] mt-[18px] mx-6">{rupiahFormat(data?.data.balance ?? 0)}</p>
+                    )}
                     <div className="flex items-center justify-between p-[10px_14px] pl-6 bg-white/20 backdrop-blur-3xl mt-[21px]">
                         <div className="flex flex-col gap-[2px]">
                             <p className="text-xs leading-[18px]">Name</p>
-                            <p className="font-semibold text-sm">Angga Risky</p>
+                            <p className="font-semibold text-sm">{getSession()?.name}</p>
                         </div>
                         <div className="flex flex-col gap-[2px]">
                             <p className="text-xs leading-[18px]">Expired At</p>
@@ -31,81 +50,23 @@ export default function CustomerWallet() {
             </section>
             <section className="flex flex-col gap-4 mt-5 px-5">
                 <h2 className="font-semibold">Latest Transactions</h2>
-                <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-[14px]">
-                        <div className="w-[100px] h-20 flex shrink-0 rounded-2xl bg-white/10 overflow-hidden">
-                            <img src="/images/thumbnails/th3.png" className="w-full h-full object-cover" alt="thumbnail" />
-                        </div>
-                        <div className="flex flex-col gap-[6px]">
-                            <h3 className="font-semibold line-clamp-2">Star Wars 3</h3>
-                            <div className="flex items-center gap-2">
-                                <img src="/images/icons/note-favorite.svg" className="w-[18px] h-[18px] flex shrink-0" alt="icon" />
-                                <p className="text-sm text-premiere-red">- Rp 1.583.493</p>
+                {transactions?.data?.data.map((item) => (
+                    <div key={item._id} className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-[14px]">
+                            <div className="w-[100px] h-20 flex shrink-0 rounded-2xl bg-white/10 overflow-hidden">
+                                <img src="/images/icons/cards.svg" className="w-8 h-8 m-auto" alt="" />
+                            </div>
+                            <div className="flex flex-col gap-[6px]">
+                                <h3 className="font-semibold line-clamp-2">Topup Wallet</h3>
+                                <div className="flex items-center gap-2">
+                                    <img src="/images/icons/note-favorite.svg" className="w-[18px] h-[18px] flex shrink-0" alt="icon" />
+                                    <p className="text-sm text-premiere-green">+ {rupiahFormat(item.price ?? 0)}</p>
+                                </div>
                             </div>
                         </div>
+                        <p className={cn(`w-fit rounded-full p-[4px_6px]  font-semibold text-[10px] leading-[15px]`, item.status === "failed" ? "bg-red-400 text-premiere-red" : "", item.status === "pending" ? "bg-yellow-400 text-premiere-yellow" : "", item.status === "success" ? "bg-green-400 text-premiere-green" : "")}>{item.status}</p>
                     </div>
-                    <p className="w-fit rounded-full p-[4px_6px] bg-premiere-light-green text-premiere-green font-semibold text-[10px] leading-[15px]">SUCCESS</p>
-                </div>
-                <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-[14px]">
-                        <div className="w-[100px] h-20 flex shrink-0 rounded-2xl bg-white/10 overflow-hidden">
-                            <img src="/images/icons/cards.svg" className="w-8 h-8 m-auto" alt="" />
-                        </div>
-                        <div className="flex flex-col gap-[6px]">
-                            <h3 className="font-semibold line-clamp-2">Topup Wallet</h3>
-                            <div className="flex items-center gap-2">
-                                <img src="/images/icons/note-favorite.svg" className="w-[18px] h-[18px] flex shrink-0" alt="icon" />
-                                <p className="text-sm text-premiere-green">+ Rp 500.000</p>
-                            </div>
-                        </div>
-                    </div>
-                    <p className="w-fit rounded-full p-[4px_6px] bg-premiere-light-red text-premiere-red font-semibold text-[10px] leading-[15px]">FAILED</p>
-                </div>
-                <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-[14px]">
-                        <div className="w-[100px] h-20 flex shrink-0 rounded-2xl bg-white/10 overflow-hidden">
-                            <img src="/images/thumbnails/th3.png" className="w-full h-full object-cover" alt="thumbnail" />
-                        </div>
-                        <div className="flex flex-col gap-[6px]">
-                            <h3 className="font-semibold line-clamp-2">Star Wars 3</h3>
-                            <div className="flex items-center gap-2">
-                                <img src="/images/icons/note-favorite.svg" className="w-[18px] h-[18px] flex shrink-0" alt="icon" />
-                                <p className="text-sm text-premiere-red">- Rp 1.583.493</p>
-                            </div>
-                        </div>
-                    </div>
-                    <p className="w-fit rounded-full p-[4px_6px] bg-premiere-light-green text-premiere-green font-semibold text-[10px] leading-[15px]">SUCCESS</p>
-                </div>
-                <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-[14px]">
-                        <div className="w-[100px] h-20 flex shrink-0 rounded-2xl bg-white/10 overflow-hidden">
-                            <img src="/images/thumbnails/th3.png" className="w-full h-full object-cover" alt="thumbnail" />
-                        </div>
-                        <div className="flex flex-col gap-[6px]">
-                            <h3 className="font-semibold line-clamp-2">Star Wars 3</h3>
-                            <div className="flex items-center gap-2">
-                                <img src="/images/icons/note-favorite.svg" className="w-[18px] h-[18px] flex shrink-0" alt="icon" />
-                                <p className="text-sm text-premiere-red">- Rp 1.583.493</p>
-                            </div>
-                        </div>
-                    </div>
-                    <p className="w-fit rounded-full p-[4px_6px] bg-premiere-light-green text-premiere-green font-semibold text-[10px] leading-[15px]">SUCCESS</p>
-                </div>
-                <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-[14px]">
-                        <div className="w-[100px] h-20 flex shrink-0 rounded-2xl bg-white/10 overflow-hidden">
-                            <img src="/images/icons/cards.svg" className="w-8 h-8 m-auto" alt="" />
-                        </div>
-                        <div className="flex flex-col gap-[6px]">
-                            <h3 className="font-semibold line-clamp-2">Topup Wallet</h3>
-                            <div className="flex items-center gap-2">
-                                <img src="/images/icons/note-favorite.svg" className="w-[18px] h-[18px] flex shrink-0" alt="icon" />
-                                <p className="text-sm text-premiere-green">+ Rp 500.000</p>
-                            </div>
-                        </div>
-                    </div>
-                    <p className="w-fit rounded-full p-[4px_6px] bg-premiere-light-green text-premiere-green font-semibold text-[10px] leading-[15px]">SUCCESS</p>
-                </div>
+                ))}
             </section>
             <BottomBar activeLink='wallet' />
         </div>
