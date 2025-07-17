@@ -4,7 +4,10 @@ import CustomerHome from "@/pages/CustomerHome";
 import CustomerMovieDetail from "@/pages/CustomerMovieDetail";
 import CustomerSignIn from "@/pages/CustomerSignIn";
 import CustomerSignUp from "@/pages/CustomerSignUp";
-import { getGenres, getMovies } from "@/services/global/global.service";
+import CustomerTransaction from "@/pages/CustomerTransaction";
+import CustomerTransactionSucess from "@/pages/CustomerTransactionSucess";
+import CustomerWallet from "@/pages/CustomerWallet";
+import { getDetailMovie, getGenres, getMovies } from "@/services/global/global.service";
 import { getTheaters } from "@/services/theater/theater.service";
 import { redirect, type RouteObject } from "react-router-dom";
 
@@ -74,10 +77,51 @@ const customerRoutes: RouteObject[] = [
             if (!params.movieId) {
                 throw redirect("/")
             }
+            const movieDetail = await getDetailMovie(params.movieId);
+
+            return {
+                detail: movieDetail.data.movie,
+            }
+        },
+        element: <CustomerMovieDetail />,
+    },
+    {
+        path: "/transaction-ticket",
+        loader: async ({ params }) => {
+            const user = getSession();
+
+            if (!user || user.role !== "customer") {
+                return redirect("/sign-in");
+            }
 
             return true
         },
-        element: <CustomerMovieDetail />,
+        element: <CustomerTransaction />,
+    },
+    {
+        path: "/transaction-ticket/success",
+        loader: async ({ params }) => {
+            const user = getSession();
+
+            if (!user || user.role !== "customer") {
+                return redirect("/sign-in");
+            }
+
+            return true
+        },
+        element: <CustomerTransactionSucess />,
+    }, {
+        path: "/wallets",
+        loader: async ({ params }) => {
+            const user = getSession();
+
+            if (!user || user.role !== "customer") {
+                return redirect("/sign-in");
+            }
+
+            return true
+        },
+        element: <CustomerWallet />
     }
 
 ]

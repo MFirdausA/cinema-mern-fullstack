@@ -1,14 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
 import filterReducer from './features/filter/filterSlice';
+import ticketReducer from './features/ticket/ticketSlice';
+
 
 export const store = configureStore({
     reducer: {
         filter:filterReducer,
+        ticket: ticketReducer,
         // posts: postsReducer,
         // comments: commentsReducer,
         // users: usersReducer
-    }
-})
+    },
+});
 
 // Infer the `RootState`,  `AppDispatch`, and `AppStore` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
