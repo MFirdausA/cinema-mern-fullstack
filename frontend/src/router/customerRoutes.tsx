@@ -7,6 +7,7 @@ import CustomerSignUp from "@/pages/CustomerSignUp";
 import CustomerTransaction from "@/pages/CustomerTransaction";
 import CustomerTransactionSucess from "@/pages/CustomerTransactionSucess";
 import CustomerWallet from "@/pages/CustomerWallet";
+import CustomerWalletTopup from "@/pages/CustomerWalletTopup";
 import { getDetailMovie, getGenres, getMovies } from "@/services/global/global.service";
 import { getTheaters } from "@/services/theater/theater.service";
 import { redirect, type RouteObject } from "react-router-dom";
@@ -110,7 +111,8 @@ const customerRoutes: RouteObject[] = [
             return true
         },
         element: <CustomerTransactionSucess />,
-    }, {
+    }, 
+    {
         path: "/wallets",
         loader: async ({ params }) => {
             const user = getSession();
@@ -122,6 +124,19 @@ const customerRoutes: RouteObject[] = [
             return true
         },
         element: <CustomerWallet />
+    },
+    {
+        path: "/wallets/topup",
+        loader: async ({ params }) => {
+            const user = getSession();
+
+            if (!user || user.role !== "customer") {
+                return redirect("/sign-in");
+            }
+
+            return true
+        },
+        element: <CustomerWalletTopup />
     }
 
 ]

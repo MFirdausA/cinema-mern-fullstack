@@ -2,7 +2,6 @@ import BottomBar from '@/components/bottomBar'
 import { cn, getSession, rupiahFormat } from '@/lib/utils';
 import { getBalance } from '@/services/global/global.service';
 import { getWalletTransactions } from '@/services/wallet/wallet.service';
-import { Item } from '@radix-ui/react-dropdown-menu';
 import { useQuery } from '@tanstack/react-query';
 import React, { use } from 'react'
 import { Link } from 'react-router-dom';

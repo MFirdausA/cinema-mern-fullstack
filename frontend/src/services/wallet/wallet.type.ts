@@ -3,3 +3,8 @@ export interface WalletTransaction {
     price: number
     status: string
 }
+
+export interface WalletTopup {
+    topup: string
+    redirect_url: string
+}
