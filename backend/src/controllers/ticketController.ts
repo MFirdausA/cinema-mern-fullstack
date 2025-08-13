@@ -44,7 +44,7 @@ export const transactionTicket = async (req: CustomRequest, res: Response) => {
             transaction: transaction.id
         })
 
-        transaction.seats = transactionSeats.map((va) => va.id)
+        transaction.seats = transactionSeats.map((va) => va._id)
 
         const currBalance = wallet.balance ?? 0
 
@@ -71,7 +71,9 @@ export const getOrders = async (req: CustomRequest, res: Response) => {
     try {
         const transactions = await Transaction.find({
             user: req.user?.id
-        }).select("seats movie theater date status").populate({
+        })
+        .select("seats movie price bonus theater date status")
+        .populate({
             path: "movie",
             select: "title thumbnail genre -_id",
             populate: {
@@ -102,10 +104,10 @@ export const getOrders = async (req: CustomRequest, res: Response) => {
 
 export const getOrdersDetail = async (req: CustomRequest, res: Response) => {
     try {
-        const { id } = req.params
+        const { id } = req.params;
 
         const transaction = await Transaction.findById(id)
-            .select("seats movie theater date status").populate({
+            .populate({
                 path: "movie",
                 select: "title thumbnail genre -_id",
                 populate: {

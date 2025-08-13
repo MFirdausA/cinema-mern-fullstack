@@ -2,14 +2,20 @@ import { getSession } from "@/lib/utils";
 import CustomerBrowseGenre from "@/pages/CustomerBrowseGenre";
 import CustomerHome from "@/pages/CustomerHome";
 import CustomerMovieDetail from "@/pages/CustomerMovieDetail";
+import CustomerOrderDetail from "@/pages/CustomerOrderDetail";
+import CustomerOrders from "@/pages/CustomerOrders";
+import CustomerSettings from "@/pages/CustomerSettings";
 import CustomerSignIn from "@/pages/CustomerSignIn";
 import CustomerSignUp from "@/pages/CustomerSignUp";
 import CustomerTransaction from "@/pages/CustomerTransaction";
 import CustomerTransactionSucess from "@/pages/CustomerTransactionSucess";
 import CustomerWallet from "@/pages/CustomerWallet";
 import CustomerWalletTopup from "@/pages/CustomerWalletTopup";
+import CustomerWalletTopupSuccess from "@/pages/CustomerWalletTopupSuccess";
+import { getTransactions } from "@/services/customers/customer.service";
 import { getDetailMovie, getGenres, getMovies } from "@/services/global/global.service";
 import { getTheaters } from "@/services/theater/theater.service";
+import { getOrderDetail, getOrders } from "@/services/transaction/transaction.service";
 import { redirect, type RouteObject } from "react-router-dom";
 
 const customerRoutes: RouteObject[] = [
@@ -88,7 +94,7 @@ const customerRoutes: RouteObject[] = [
     },
     {
         path: "/transaction-ticket",
-        loader: async ({ params }) => {
+        loader: async () => {
             const user = getSession();
 
             if (!user || user.role !== "customer") {
@@ -101,7 +107,7 @@ const customerRoutes: RouteObject[] = [
     },
     {
         path: "/transaction-ticket/success",
-        loader: async ({ params }) => {
+        loader: async () => {
             const user = getSession();
 
             if (!user || user.role !== "customer") {
@@ -114,7 +120,7 @@ const customerRoutes: RouteObject[] = [
     }, 
     {
         path: "/wallets",
-        loader: async ({ params }) => {
+        loader: async () => {
             const user = getSession();
 
             if (!user || user.role !== "customer") {
@@ -127,7 +133,7 @@ const customerRoutes: RouteObject[] = [
     },
     {
         path: "/wallets/topup",
-        loader: async ({ params }) => {
+        loader: async () => {
             const user = getSession();
 
             if (!user || user.role !== "customer") {
@@ -137,7 +143,67 @@ const customerRoutes: RouteObject[] = [
             return true
         },
         element: <CustomerWalletTopup />
-    }
+    },
+    {
+        path: "/wallets/topup/success",
+        loader: async () => {
+            const user = getSession();
+
+            if (!user || user.role !== "customer") {
+                return redirect("/sign-in");
+            }
+
+            return true
+        },
+        element: <CustomerWalletTopupSuccess />
+    },
+    {
+        path: "/orders",
+        loader: async () => {
+            const user = getSession();
+
+            if (!user || user.role !== "customer") {
+                return redirect("/sign-in");
+            }
+
+            const transactions = await getOrders();
+
+            return transactions.data;
+        },
+        element: <CustomerOrders />
+    },
+    {
+        path: "/orders/:orderId",
+        loader: async ({ params }) => {
+            const user = getSession();
+
+            if (!user || user.role !== "customer") {
+                return redirect("/sign-in");
+            }
+
+            if (!params.orderId) {
+                throw redirect("/orders");
+            }
+
+            const transaction = await getOrderDetail(params.orderId);
+
+            return transaction.data;
+        },
+        element: <CustomerOrderDetail />
+    },
+    {
+        path: "/settings",
+        loader: async () => {
+            const user = getSession();
+
+            if (!user || user.role !== "customer") {
+                return redirect("/sign-in");
+            }
+
+            return true;
+        },
+        element: <CustomerSettings />
+    },
 
 ]
 
