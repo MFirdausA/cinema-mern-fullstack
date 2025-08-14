@@ -112,7 +112,7 @@ export default function ChooseTime() {
             </div>
             <div className="flex flex-col gap-4 mt-5 px-5">
                 <h2 className="font-semibold">Available Time Theater</h2>
-                <div className="theather-card flex items-center rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md">
+                <div className="theather-card flex items-center rounded-3xl p-4 gap-2 bg-[#522AFC] backdrop-blur-md">
                     <div className="w-[100px] h-[110px] flex shrink-0 rounded-2xl overflow-hidden bg-[#D9D9D9]">
                         <img
                             src="/images/thumbnails/theater1.png"
@@ -129,12 +129,11 @@ export default function ChooseTime() {
                 </div>
             </div>
             <form action="choose-seat.html" className="relative px-5 mt-5">
-                <div id="Theaters" className="tab-content flex flex-col gap-4">
+                <div id="Theaters" className="tab-content flex flex-col gap-4 ">
                     <h2 className="font-semibold">Choose Time</h2>
                     <div className="grid grid-cols-2 gap-4">
                         {detail.times.map((item, i) => (
-                            <button
-                                type="button"
+                            <label
                                 onClick={() => {
                                     console.log(
                                         `${dayjs().add(1, "day").format("YYYY-MM-DD")} ${item}`,
@@ -143,13 +142,16 @@ export default function ChooseTime() {
                                         `${dayjs().add(1, "day").format("YYYY-MM-DD")} ${item}`,
                                     );
                                 }}
+                                htmlFor={`time-${item}`}
                                 key={`${item + i}`}
-                                className="group relative theather-card flex flex-col rounded-3xl p-4 gap-[2px] bg-white/10 backdrop-blur-md has-[:disabled]:!bg-white/10 hover:bg-blue-500 has-[:checked]:bg-blue-500 transition-all duration-300"
+                                className="group relative theather-card flex flex-col text-center rounded-3xl p-4 gap-[2px] bg-white/10 backdrop-blur-md has-[:disabled]:!bg-white/10 hover:bg-[#522AFC] has-[:checked]:bg-[#522AFC] transition-all duration-300"
                             >
                                 <input
+                                    id={`time-${item}`}
                                     type="radio"
                                     name="Time"
                                     className="absolute top-1/2 left-1/2 opacity-0"
+                                    onChange={() => setDate(item)}
                                     required
                                 />
                                 <p className="font-semibold text-xs leading-[18px] group-has-[:disabled]:opacity-30 ">
@@ -161,7 +163,7 @@ export default function ChooseTime() {
                                 <p className="font-semibold text-xs leading-[18px] group-has-[:disabled]:opacity-30 ">
                                     {dayjs().add(1, "day").format("DD MMM YYYY")}
                                 </p>
-                            </button>
+                            </label>
                         ))}
                     </div>
                 </div>

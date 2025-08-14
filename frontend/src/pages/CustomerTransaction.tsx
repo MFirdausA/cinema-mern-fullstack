@@ -87,7 +87,8 @@ export default function CustomerTransaction() {
         <div id="Content-Container" className="relative flex flex-col w-full max-w-[640px] min-h-screen mx-auto text-white bg-[linear-gradient(179.86deg,_#000000_40.82%,_#0E0E24_99.88%)] overflow-x-hidden">
             <div id="Header" className="flex flex-col gap-5">
                 <div id="Top-Nav" className="relative flex items-center justify-between px-5 mt-[60px]">
-                    <Link to="/movie/${movie?.id}" className="w-12 h-12 flex shrink-0 items-center justify-center bg-[#FFFFFF1A] backdrop-blur-md rounded-full">
+                    <Link to={`/movie/${movie?.id}`} 
+                        className="w-12 h-12 flex shrink-0 items-center justify-center bg-[#FFFFFF1A] backdrop-blur-md rounded-full">
                         <img src="/images/icons/arrow-left.svg" className="w-[22px] h-[22px] flex shrink-0" alt="" />
                     </Link>
                     <p className="text-center mx-auto font-semibold text-sm">Tickets Payment</p>

@@ -109,16 +109,17 @@ export default function SelectTheater() {
                 <div id="Theaters" className="tab-content flex flex-col gap-4">
                     <h2 className="font-semibold">Available in Theaters</h2>
                     {detail.theaters.map((item) => (
-                        <button
-                            type="button"
+                        <label
+                            htmlFor={`theater-${item._id}`}
                             key={item._id}
-                            onClick={() => setTheater(item)}
-                            className="relative theather-card flex items-center rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md hover:bg-blue-500 has-[:checked]:bg-blue-500 transition-all duration-300"
+                            className="relative theather-card flex items-center rounded-3xl p-4 gap-2 bg-white/10 backdrop-blur-md hover:bg-[#522AFC] has-[:checked]:bg-[#522AFC] transition-all duration-300 cursor-pointer"
                         >
                             <input
                                 type="radio"
+                                id={`theater-${item._id}`}
                                 name="theater"
                                 className="absolute top-1/2 left-1/2 opacity-0"
+                                onChange={() => setTheater(item)}
                                 required
                             />
                             <div className="w-[100px] h-[110px] flex shrink-0 rounded-2xl overflow-hidden bg-[#D9D9D9]">
@@ -132,7 +133,7 @@ export default function SelectTheater() {
                                 <h3 className="font-semibold">{item.name}</h3>
                                 <p className="text-sm text-white">{item.city}</p>
                             </div>
-                        </button>
+                        </label>
                     ))}
                 </div>
                 <div className="relative h-[98px] w-full max-w-[640px]">

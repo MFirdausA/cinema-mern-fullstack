@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { checkSeats } from "@/services/global/global.service";
 import {
     setMovieDetail,
+    setStep,
     setTicketDetail,
 } from "@/redux/features/ticket/ticketSlice";
 
@@ -96,8 +97,15 @@ export default function ChooseSeat() {
                     id="Top-Nav"
                     className="relative flex items-center justify-between px-5 mt-[60px]"
                 >
-                    <a
-                        href="choose-time.html"
+                    <button
+                        type="button"
+                        onClick={() => {
+                            dispatch(
+                                setStep({
+                                    step: "TIME",
+                                }),
+                            );
+                        }}
                         className="w-12 h-12 flex shrink-0 items-center justify-center bg-[#FFFFFF1A] backdrop-blur-md rounded-full"
                     >
                         <img
@@ -105,7 +113,7 @@ export default function ChooseSeat() {
                             className="w-[22px] h-[22px] flex shrink-0"
                             alt=""
                         />
-                    </a>
+                    </button>
                     <p className="text-center mx-auto font-semibold text-sm">
                         Choose Your Seats
                     </p>
@@ -177,7 +185,7 @@ export default function ChooseSeat() {
                         <span className="font-semibold text-xs leading-[18px]">Booked</span>
                     </div>
                     <div className="flex items-center gap-[6px]">
-                        <span className="w-4 h-4 flex shrink-0 rounded-[6px] bg-purple-premiere" />
+                        <span className="w-4 h-4 flex shrink-0 rounded-[6px] bg-[#522AFC]" />
                         <span className="font-semibold text-xs leading-[18px]">
                             Selected
                         </span>
