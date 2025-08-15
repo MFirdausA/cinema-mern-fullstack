@@ -7,14 +7,14 @@ import { topupSchema } from "../utils/zodSchema";
 export const getBalance = async (req: CustomRequest, res : Response) => {
     try {
         const wallet = await Wallet.findOne({ 
-            User: req.user?.id 
+            user: req.user?.id 
         });
 
         return res.json({
             status: true,
             message: "Success get data",
             data: {
-                userId: wallet?.User,
+                userId: wallet?.user,
                 balance: wallet?.balance ?? 0
                 
             }
@@ -32,7 +32,7 @@ export const getBalance = async (req: CustomRequest, res : Response) => {
 export const getTopupHistory = async (req: CustomRequest, res : Response) => {
     try {
         const  wallet = await Wallet.findOne({
-            User: req.user?.id
+            user: req.user?.id
         })
 
         const data = await WalletTransaction.find({
@@ -62,12 +62,20 @@ export const topupBalance = async (req: CustomRequest, res : Response) => {
         const midtransUrl = process.env.MIDTRANS_TRANSACTION_URL ?? "";
         const midtransAuth = process.env.MIDTRANS_AUTH_STRING ?? "";
         
-        const wallet = await Wallet.findOne({ 
-            User: req?.user?.id 
+        let wallet = await Wallet.findOne({ 
+            user: req?.user?.id 
         });
 
-        const topup = new WalletTransaction({
+        if (!wallet) {
+            wallet = await Wallet.create({
+                user: req.user?.id,
+                balance: 0
+            });
+        }
+
+        const topup = await WalletTransaction.create({
             wallet: wallet?._id,
+            user: req.user?.id,
             price: parse.balance,
             status: "pending"
         })
@@ -92,7 +100,7 @@ export const topupBalance = async (req: CustomRequest, res : Response) => {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
-                Authorization: `BASIC ${midtransAuth}`
+                Authorization: `Basic ${midtransAuth}`
             }
         })
 
@@ -116,3 +124,55 @@ export const topupBalance = async (req: CustomRequest, res : Response) => {
         });
     }
 }
+
+export const handleTopupBalance = async (req: Request, res: Response) => {
+	try {
+		const body = req.body;
+
+		const orderId = body.order_id;
+
+		switch (body.transaction_status) {
+			case "capture":
+			case "settlement": {
+				const walletTransaction = await WalletTransaction.findById(orderId);
+				const wallet = await Wallet.findById(walletTransaction?.wallet);
+
+				await WalletTransaction.findByIdAndUpdate(orderId, {
+					status: "success",
+				});
+
+				const currentBalance = wallet?.balance ?? 0;
+				const additionalBalance = walletTransaction?.price ?? 0;
+
+				await Wallet.findByIdAndUpdate(wallet?.id, {
+					balance: currentBalance + additionalBalance,
+				});
+
+				break;
+			}
+
+			case "deny":
+			case "cancel":
+			case "expire":
+			case "failure": {
+				await WalletTransaction.findByIdAndUpdate(orderId, {
+					status: "failed",
+				});
+
+				break;
+			}
+
+			default:
+				break;
+		}
+
+		return res.json({ status: true });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({
+			message: "Failed to topup balance",
+			data: null,
+			status: "failed",
+		});
+	}
+};

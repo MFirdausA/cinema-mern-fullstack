@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import User from "./User";
 
 const WalletSchema = new mongoose.Schema({
-    User: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },

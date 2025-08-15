@@ -22,7 +22,7 @@ export default function CustomerWallet() {
         <div id="Content-Container" className="relative text-white flex flex-col w-full max-w-[640px] min-h-screen mx-auto bg-[linear-gradient(90deg,_#000000_40.82%,_#0E0E24_99.88%)] overflow-x-hidden">
             <div className="flex items-center justify-between px-5 mt-[60px]">
                 <h1 className="font-bold text-[26px] leading-[39px]">My Wallet</h1>
-                <Link to="/wallet/topup" className="rounded-full text-black p-[12px_18px] bg-white font-bold text-premiere-black">Top Up</Link>
+                <Link to="/wallets/topup" className="rounded-full text-black p-[12px_18px] bg-white font-bold text-premiere-black">Top Up</Link>
             </div>
             <section id="Wallet" className="flex flex-col items-center gap-3 px-5 mt-5">
                 <div className="relative flex flex-col w-full max-w-[353px] rounded-[30px] bg-white/10 overflow-hidden">

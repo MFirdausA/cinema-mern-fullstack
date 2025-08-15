@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import authRoutes from './routes/authRoutes';
 import customersRoutes from './routes/customersRoutes';
 import cors from 'cors';
+import { handleTopupBalance } from './controllers/walletController';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Express + TypeScript Server');
 })
 
+app.post("/api/global/handle-payment", handleTopupBalance);
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/customer", customersRoutes)
